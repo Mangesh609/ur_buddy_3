@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     SizedBox(height: 70),
                     Text(
-                      "Let's sign you in.",
+                      "Let's sign you in here.",
                       style: _theme.textTheme.headline4,
                     ),
                     SizedBox(height: 10),
