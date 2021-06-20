@@ -42,7 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 15),
                     Center(
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                        },
                         child: Text(
                           'Forgot Password?',
                           style: TextStyle(

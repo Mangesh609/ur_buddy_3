@@ -10,7 +10,7 @@ class ProfileDetailWidget extends StatelessWidget {
       padding: const EdgeInsets.only(top: 2.5, bottom: 2.5),
       child: Text(
           text,
-          maxLines: 3,
+          maxLines: 4,
           overflow: TextOverflow.ellipsis,
           //softWrap: true,
           style: TextStyle(
@@ -39,7 +39,7 @@ class ProfileDetailWidget extends StatelessWidget {
                 _text(value, 0.5)
               ],
             ),
-          )
+          ),
         ],
       ),
     );

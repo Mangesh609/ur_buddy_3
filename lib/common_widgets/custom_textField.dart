@@ -8,15 +8,32 @@ class CustomTextField extends StatefulWidget {
   final String errorText;
   final bool isLast;
   final Function(String value) validator;
+  final int maxlines;
+  final bool hasPrefix;
+  final bool hasNumInput;
+  final bool hasSuffix;
+  final IconData prefixIcon;
+  final String suffixtext;
+  final initialValue;
+  final inputFormatter;
+  final fontSize;
 
-  CustomTextField({
-    this.label,
-    this.isPassword = false,
-    this.onChanged,
-    this.validator,
-    this.errorText,
-    this.isLast = false,
-  });
+  CustomTextField(
+      {this.suffixtext,
+      this.prefixIcon,
+      this.hasSuffix = false,
+      this.hasNumInput = false,
+      this.hasPrefix = false,
+      this.maxlines = 1,
+      this.label,
+      this.isPassword = false,
+      this.onChanged,
+      this.validator,
+      this.errorText,
+      this.isLast = false,
+      this.initialValue,
+      this.inputFormatter, 
+      this.fontSize= 14.0});
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -37,10 +54,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
       borderRadius: BorderRadius.all(Radius.circular(12)),
       borderSide: BorderSide(color: _theme.errorColor, width: 2),
     );
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: TextFormField(
+      
+        keyboardType:
+            widget.hasNumInput ? TextInputType.number : TextInputType.text,
         onChanged: widget.onChanged,
         validator: widget.validator,
         onEditingComplete: () {
@@ -53,20 +73,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
         obscureText: widget.isPassword ? !_showPassword : false,
         textInputAction:
             widget.isLast ? TextInputAction.done : TextInputAction.next,
+        inputFormatters: widget.inputFormatter,
         decoration: InputDecoration(
-          isDense: true,
-          labelText: widget.label,
-          fillColor: Color(0xFF1E1C24),
-          enabledBorder: _simpleBorder,
-          focusedBorder: _simpleBorder,
-          errorBorder: _errorBorder,
-          focusedErrorBorder: _errorBorder,
-          filled: true,
-          labelStyle: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w500,
-            color: _theme.accentColor.withOpacity(0.5),
-          ),
+          suffixText: widget.hasSuffix ? widget.suffixtext : null,
+          suffixStyle:
+              Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 20),
+          prefixIcon: widget.hasPrefix
+              ? Icon(
+                  widget.prefixIcon,
+                  color: Colors.white,
+                  size: 22,
+                )
+              : null,
           suffixIcon: widget.isPassword
               ? IconButton(
                   icon: Icon(_showPassword
@@ -83,11 +101,28 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   },
                 )
               : null,
+          isDense: true,
+          labelText: widget.label,
+          fillColor: Color(0xFF1E1C24),
+          enabledBorder: _simpleBorder,
+          focusedBorder: _simpleBorder,
+          errorBorder: _errorBorder,
+          focusedErrorBorder: _errorBorder,
+          filled: true,
+          
+          labelStyle: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w500,
+            color: _theme.accentColor.withOpacity(0.5),
+          ),
         ),
         style: TextStyle(
           color: _theme.accentColor,
           fontWeight: FontWeight.w500,
+          fontSize: widget.fontSize
         ),
+        maxLines: widget.maxlines,
+        initialValue: widget.initialValue,
       ),
     );
   }
